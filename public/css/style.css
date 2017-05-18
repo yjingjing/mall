@@ -1,0 +1,26 @@
+.btn,input{outline: none;}
+.btn{border: 0px;padding-top: 0px;padding-bottom: 0px;height: 30px;line-height: 30px;}
+.form-control{box-shadow: none;outline: none;}
+a:hover{text-decoration: none;}
+.panel-default{margin-top: 20px;}
+.panel-body{padding: 30px 50px 0 50px;}
+.form-group{margin-bottom: 35px;}
+.panel-title{font-size: 24px;font-weight: bold;}
+.submit-group .btn,.btn-cart:link,.btn-cart:visited{background:#e34551;color: #fff;}
+.submit-group a{margin-top: 20px;}
+.submit-group a:link,.submit-group a:visited{color: #333;}
+.spys{list-style: none;}
+.spys li{float: left;margin: 10px 10px;width: 180px;height: 230px;}
+.spys li div strong{color: red;}
+
+.cart-heading{height: 40px;background-color: #efeded;}
+.cart-body{background-color: #F7F7F7;}
+.cart-body ul li{list-style: none;margin-left: -30px;width: 870px;}
+.cart-body ul li div{float: left;height: 80px;}
+.li-checkbox input{margin: 20px 5px 0 0;}
+.li-img a img{width: 40px;height: 50px;}
+.li-content{margin: 20px 0 0 30px;width: 280px;}
+.li-price{margin: 20px 0 0 60px;width: 100px;}
+.li-quantity{margin: 20px 0 0 130px;width: 100px;}
+.li-del{margin: 20px 0 0 30px;width: 50px;}
+.li-img{margin: 0 0 0 10px;}

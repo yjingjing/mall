@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="/css/style.css" />
+		<script src="/js/jquery.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
+		<script>
+			$(function(){
+				//商品+-
+				$('.li-quantity a').click(function(){
+					var self=$(this);
+					var type=self.attr('data-type'),
+						num=parseFloat(self.siblings('input').val());
+					if(type=='add'){
+						num+=1;
+					}else if(type=='substr'){
+						if(num>1){
+							num-=1;
+						}else{
+							return false;
+						}
+					}
+					self.siblings('input').val(num);
+					tamount();
+				});
+				//checkbox单选事件
+				$('input[name="chkItem"]:checkbox').click(function(){
+					var isCheck=$('input[name="chkItem"]:not(:checked)').length?false:true;
+					$('#checkAll').prop("checked",isCheck);
+					tamount();
+				});
+				//checkbox全选事件
+				$('#checkAll').click(function(){
+					var self=$(this);
+					$('input[name="chkItem"]').each(function(){
+						$(this).prop("checked",self.is(':checked'));
+					});
+					tamount();
+				});
+			});
+			var sum=0;
+			//用户结算
+			function clearing(){
+				$('input[name="chkItem"]:checked').each(function(){
+					var self=$(this),index=self.attr('data-index'),cid=self.atr('data-id');
+					var quantity=$('#Q'+index).val();
+					var data={"cid":cid,"cnum":quantity};
+					$.ajax({
+						type:"post",
+						url:"/cart/clearing",
+						data:data,
+						success:function(data,status){
+							
+						},
+						error:function(data,status){
+							
+						}
+					});
+				});
+				alert('￥'+sum);
+				location.href='cart';
+			}
+			function tamount(){
+				sum=0;
+				$('input[name="chkItem"]:checked').each(function(){
+					var self=$(this),price=self.attr('data-price'),
+						index=self.attr('data-index');
+					var quantity=$('#Q'+index).val();
+					sum+=(parseFloat(price)*parseFloat(quantity));
+				});
+				$("#money").html('￥'+sum+'.00');
+			}
+		</script>
+		<title>购物车</title>
+	</head>
+	<body>
+		<div style="margin: 50px auto;width: 900px;">
+			<div>
+				<div>
+					<div>
+						<a href="home" class="btn btn-success">商品页</a>
+						<a href="logout" class="btn btn-info">退出</a>
+					</div>
+					<h2>购物车</h2>
+					<hr />
+				</div>
+				<div>
+					<div class="cart-heading">
+						<div style="padding: 10px 0 0 10px;">
+							<span style="margin-right: 200px;">
+								<input type="checkbox" id="checkAll" />全选
+							</span>
+							<span style="margin-right: 180px;">商品</span>
+							<span style="margin-right: 210px;">价格</span>
+							<span style="margin-right: 80px;">数量</span>
+							<span style="padding-right: 0px;">操作</span>
+						</div>
+					</div>
+					<div class="cart-body">
+						<ul>
+							<%for(var i in carts){if(!carts[i].cId)continue%>
+							<li>
+								<div class="li-checkbox">
+									<input type="checkbox" class="li-checkbox input" data-id="<%=carts[i]._id%>" data-index="<%=i%>" data-price="<%=carts[i].cPrice%>" name="chkItem" />
+								</div>
+								<div class="li-img">
+									<a><img src="/images/<%=carts[i].cImgSrc%>" alt="" class="li-img a img" /></a>
+								</div>
+								<div class="li-content"><a><%=carts[i].cName%></a></div>
+								<div class="li-price"><span><%=carts[i].cPrice%></span></div>
+								<div class="li-quantity">
+									<a href="javascript:void(0);" class="btn btn-default btn-xs" data-type="add">+</a>
+									<input type="text" id="Q<%=i%>" style="width: 40px;" value="<%=carts[i].cQuantity%>" />
+									<a href="javascript:void(0);" data-type="substr" class="btn btn-default btn-xs">-</a>
+								</div>
+								<div class="li-del">
+									<a href="/delFromCart/<%=carts[i]._id%>" class="btn btn-primary btn-xs">删除</a>
+								</div>
+							</li>
+							<%}%>
+						</ul>
+					</div>
+					<div style="float: right;height: 35px;width: 330px;">
+						总计：<span id="money" style="color: red;font-size: 25px;">￥0.00</span>
+						<input type="button" value="结算" onclick="clearing();" class="btn btn-cart pull-right" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

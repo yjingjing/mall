@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="/css/style.css" />
+		<script src="/js/jquery.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
+		<title>主页</title>
+	</head>
+	<body>
+		<div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="text-center">商品展示页</div>
+					<div>
+						<div>
+							<a href="addcommodity" class="btn btn-success">添加商品</a>
+							<a href="cart" class="btn btn-success">购物车</a>
+							<a href="logout" class="btn btn-info">退出</a>
+						</div>
+					</div>
+				</div>
+				<div class="panel-body">
+					<ul class="spys">
+						<%for(var i in Commoditys){if(!Commoditys[i].name)continue;%>
+							<li class="spys li">
+								<div><img src="/images/<%=Commoditys[i].imgSrc%>" width="80" height="80" alt="" /></div>
+								<div>
+									<a><%=Commoditys[i].name%></a>
+									<strong>￥<%=Commoditys[i].price%></strong>
+								</div>
+								<div><a href="/addToCart/<%=Commoditys[i]._id%>" class="btn btn-cart">加入购物车</a></div>
+							</li>
+						<%}%>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
